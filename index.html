@@ -5,69 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BeeTag - Minimal Studio</title>
     
+    <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/150/4a443f/bee.png">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/150/4a443f/bee.png">
+    <meta name="theme-color" content="#bcaf9f">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root { --bg: #bcaf9f; --card: #fdfcfb; --text: #4a443f; --accent: #d4a373; --danger: #9e2a2b; --ok: #6b705c; --header: #2c2a28; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); padding-bottom: 100px; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); padding-bottom: 240px; }
         
-        header { background: var(--header); color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
-        /* BEETAG PIÙ GRANDE E MAIUSCOLO */
-        .logo-text { font-size: 22px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        header { background: var(--header); color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 900; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
         .dashboard-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin: 15px; }
-        .meteo-panel { background: #eaddcf; border-radius: 20px; padding: 15px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 110px; border: 1px solid rgba(0,0,0,0.1); }
+        .meteo-panel { background: #eaddcf; border-radius: 20px; padding: 15px; text-align: center; border: 1px solid rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; min-height: 110px; }
         .summary-panel { background: var(--card); border-radius: 20px; padding: 15px; font-size: 11px; }
 
         .container { padding: 0 15px; }
         .section { background: var(--card); border-radius: 25px; padding: 22px; margin-bottom: 25px; border-top: 6px solid var(--accent); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
         
-        h2 { font-size: 14px; text-transform: uppercase; color: #5d5753; border-bottom: 2px solid #f0edea; padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; margin-top: 0; }
+        h2 { font-size: 14px; text-transform: uppercase; color: #5d5753; border-bottom: 2px solid #f0edea; padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; margin-top: 0; letter-spacing: 1px; }
 
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
-        .btn-check { min-height: 55px; background: #fff; border: 2px solid #e8e2dc; border-radius: 15px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
+        .btn-check { min-height: 60px; background: #fff; border: 2px solid #e8e2dc; border-radius: 16px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; color: var(--text); transition: 0.2s; }
         .btn-check.active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent); }
-        
-        input, select, textarea { width: 100%; padding: 15px; border: 2px solid #e8e2dc; border-radius: 15px; font-size: 15px; box-sizing: border-box; margin-bottom: 12px; font-family: inherit; color: var(--text); font-weight: 600; }
-        
-        /* SALVA VISITA MENO INVASIVO */
-        .btn-save { position: fixed; bottom: 25px; right: 20px; background: var(--ok); color: white; width: 70px; height: 70px; border: none; border-radius: 50%; font-size: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); z-index: 1001; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .btn-save:active { transform: scale(0.9); }
-        .save-label { position: fixed; bottom: 45px; right: 100px; background: var(--ok); color: white; padding: 8px 15px; border-radius: 10px; font-weight: 900; font-size: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-check.danger.active { background: var(--danger) !important; border-color: var(--danger); }
 
-        /* FOOTER CORRETTO */
-        .footer-minimal { padding: 20px; text-align: center; margin-top: 10px; }
-        .footer-minimal a { color: var(--header); text-decoration: none; font-weight: 800; font-size: 12px; letter-spacing: 2px; opacity: 0.7; }
-
-        #stats-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdfcfb; z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        .info-label { font-size: 10px; font-weight: 800; color: #8a817c; margin-bottom: 5px; display: block; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 18px; border: 2px solid #e8e2dc; border-radius: 16px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; font-weight: 600; font-family: inherit; color: var(--text); }
         
-        .history-card { background: #fff; padding: 18px; border-radius: 18px; margin-bottom: 15px; border-left: 6px solid var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        #reg-colore-visual { height: 60px; border-radius: 16px; margin-bottom: 15px; border: 3px solid #e8e2dc; display: flex; align-items: center; justify-content: center; font-weight: 900; background: #eee; text-transform: uppercase; letter-spacing: 2px; }
+
+        .alarm-badge { background: var(--danger); color: white; padding: 18px; border-radius: 18px; font-weight: 900; display: none; text-align: center; margin-bottom: 18px; border: 2px solid rgba(255,255,255,0.2); }
+
+        .btn-save { position: fixed; bottom: 100px; left: 15px; right: 15px; background: var(--ok); color: white; padding: 25px; border: none; border-radius: 30px; font-size: 22px; font-weight: 900; z-index: 1000; box-shadow: 0 12px 30px rgba(0,0,0,0.4); text-transform: uppercase; }
+        
+        /* FOOTER MINIMAL STUDIO */
+        .footer-minimal { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); padding: 30px 20px; text-align: center; z-index: 999; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer-minimal a { color: var(--header); text-decoration: none; font-weight: 900; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; display: inline-block; padding: 10px; border-bottom: 2px solid var(--header); }
+
+        #stats-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdfcfb; z-index: 2000; padding: 25px; box-sizing: border-box; overflow-y: auto; }
+        .export-btn { background: #4a443f; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 8px; }
+        .info-label { font-size: 11px; font-weight: 800; color: #8a817c; margin-bottom: 8px; display: block; margin-left: 5px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-text"><i class="fas fa-bee"></i> BEETAG</div>
-    <div onclick="showStats()" style="background:rgba(255,255,255,0.15); padding:8px 15px; border-radius:12px; font-size:13px;"><i class="fas fa-history"></i> STORICO</div>
+    <div style="display:flex; align-items:center; gap:12px;"><i class="fas fa-bee"></i> BeeTag</div>
+    <div onclick="showStats()" style="background:rgba(255,255,255,0.15); padding:10px 18px; border-radius:14px; font-size:14px; cursor:pointer;"><i class="fas fa-history"></i> STORICO</div>
 </header>
 
 <div class="dashboard-top">
     <div class="meteo-panel">
-        <div id="loc-name" style="font-size: 10px; font-weight: 900; opacity: 0.7;">RILEVAMENTO...</div>
-        <div id="meteo-icon" style="font-size: 35px; margin: 5px 0;"></div>
-        <div id="temp-val" style="font-size: 32px; font-weight: 900;">--°</div>
+        <div id="loc-name" style="font-size: 11px; font-weight: 900; color: #6b705c;">LOCALIZZAZIONE...</div>
+        <div id="meteo-icon" style="font-size: 40px; margin: 8px 0;"></div>
+        <div id="temp-val" style="font-size: 38px; font-weight: 900; color: var(--header);">--°</div>
     </div>
     <div class="summary-panel">
         <span class="info-label">Ultima Visita</span>
-        <div id="last-data" style="font-weight:900; font-size:14px; margin-bottom:8px;">--/--/--</div>
-        <span class="info-label">Forza</span>
-        <div id="last-forza" style="font-weight:900; font-size:14px; color:var(--accent);">---</div>
+        <div id="last-data" style="font-weight:900; font-size:15px; margin-bottom:10px;">--/--/--</div>
+        <span class="info-label">Ultima Forza</span>
+        <div id="last-forza" style="font-weight:900; font-size:15px; color:var(--accent);">---</div>
     </div>
 </div>
 
 <div class="container">
+    <button class="export-btn" onclick="exportSingle()"><i class="fas fa-file-export"></i> ESPORTA REPORT VISITA</button>
+
+    <!-- STATO FAMIGLIA -->
     <div class="section">
         <h2><i class="fas fa-users"></i> Stato Famiglia</h2>
         <div class="grid" id="forza-selector">
@@ -75,127 +79,241 @@
             <div class="btn-check" data-val="MEDIA" onclick="selectOne(this)">MEDIA</div>
             <div class="btn-check" data-val="SCARSA" onclick="selectOne(this)">SCARSA</div>
         </div>
-    </div>
-
-    <div class="section">
-        <h2><i class="fas fa-crown"></i> Regina</h2>
-        <span class="info-label">Anno Nascita</span>
-        <input type="number" id="reg-anno" placeholder="Es: 2026" oninput="updateReginaUI(this.value)">
-        <div id="reg-colore-visual" style="height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:900; margin-bottom:15px; border:2px solid #e8e2dc; background:#eee;">COLORE</div>
-    </div>
-
-    <div class="section">
-        <h2><i class="fas fa-biohazard"></i> Sciamatura</h2>
-        <span class="info-label">Data Ritrovamento Celle</span>
-        <input type="date" id="cell-date">
-        <div class="grid" style="grid-template-columns: 2fr 1fr;">
-            <div class="btn-check" id="presenza-celle" onclick="this.classList.toggle('active')" style="border-color:var(--danger); color:var(--danger);">CELLE REALI</div>
-            <input type="number" id="num-celle" placeholder="Q.tà">
+        <div class="grid">
+            <div class="btn-check multi" data-val="COV. OPERCOLATA" onclick="this.classList.toggle('active')">COV. OPERCOLATA</div>
+            <div class="btn-check multi" data-val="COV. FRESCA" onclick="this.classList.toggle('active')">COV. FRESCA</div>
+            <div class="btn-check multi" data-val="SCORTE" onclick="this.classList.toggle('active')">SCORTE</div>
         </div>
     </div>
 
+    <!-- REGINA -->
+    <div class="section">
+        <h2><i class="fas fa-crown"></i> Regina</h2>
+        <span class="info-label">Anno di Nascita</span>
+        <input type="number" id="reg-anno" placeholder="Es: 2026" oninput="updateReginaUI(this.value)">
+        <div id="reg-colore-visual">COLORE REGINA</div>
+        <div class="grid">
+            <div class="btn-check" id="q-v" onclick="selectExclude(this, 'q-nv')">VISTA</div>
+            <div class="btn-check" id="q-nv" onclick="selectExclude(this, 'q-v')">NON VISTA</div>
+            <div class="btn-check" id="q-m" onclick="selectExclude(this, 'q-nm')">MARCATA</div>
+            <div class="btn-check" id="q-nm" onclick="selectExclude(this, 'q-m')">NON MARCATA</div>
+        </div>
+    </div>
+
+    <!-- SCIAMATURA -->
+    <div class="section">
+        <h2><i class="fas fa-biohazard"></i> Sciamatura</h2>
+        <div class="grid" style="grid-template-columns: 2fr 1fr;">
+            <div class="btn-check danger multi" id="presenza-celle" onclick="this.classList.toggle('active')">CELLE REALI</div>
+            <input type="number" id="num-celle" placeholder="Quantità">
+        </div>
+    </div>
+
+    <!-- BLOCCO COVATA -->
     <div class="section">
         <h2><i class="fas fa-lock"></i> Blocco Covata</h2>
+        <div id="blocco-alarm" class="alarm-badge">⚠️ SBLOCCO TRA: <span id="days-to-go">--</span> GG</div>
         <input type="date" id="blocco-inizio" onchange="calculateBlocco()">
     </div>
 
+    <!-- OPERAZIONI -->
     <div class="section">
-        <h2><i class="fas fa-edit"></i> Note</h2>
-        <textarea id="note-finali" rows="3" placeholder="Scrivi qui..."></textarea>
+        <h2><i class="fas fa-tools"></i> Operazioni</h2>
+        <div class="grid">
+            <div class="btn-check op-btn" data-val="FORM. NUCLEO" onclick="this.classList.toggle('active')">FORM. NUCLEO</div>
+            <div class="btn-check op-btn" data-val="PAREGGIATURA" onclick="this.classList.toggle('active')">PAREGGIATURA</div>
+            <div class="btn-check op-btn" data-val="MESSO MELARIO" onclick="this.classList.toggle('active')">MESSO MELARIO</div>
+            <div class="btn-check op-btn" data-val="NUTRIZIONE" onclick="this.classList.toggle('active')">NUTRIZIONE</div>
+        </div>
+        <input type="number" id="fogli-n" placeholder="Fogli Cerei Aggiunti">
     </div>
 
-    <div class="footer-minimal">
-        <a href="https://linktr.ee/minimal_studio" target="_blank">MINIMAL STUDIO</a>
+    <!-- TRATTAMENTI -->
+    <div class="section">
+        <h2><i class="fas fa-medkit"></i> Trattamenti</h2>
+        <div id="tratt-alarm" class="alarm-badge">⚠️ RIMUOVERE TRA <span id="tratt-days">--</span> GG</div>
+        <select id="tratt-tipo" onchange="calculateTrattamento()">
+            <option value="" data-days="0">Nessuno...</option>
+            <option value="Apivar" data-days="42">Apivar (42gg)</option>
+            <option value="Apistan" data-days="42">Apistan (42gg)</option>
+            <option value="Apiguard" data-days="28">Apiguard (28gg)</option>
+            <option value="Formico" data-days="7">Acido Formico (7gg)</option>
+        </select>
+        <input type="date" id="tratt-data" onchange="calculateTrattamento()">
     </div>
+
+    <!-- MEDIA E NOTE -->
+    <div class="section">
+        <h2><i class="fas fa-microphone-alt"></i> Media & Note</h2>
+        <div class="grid" style="grid-template-columns: 1fr 1fr;">
+            <label class="btn-check" style="background:#4a443f; color:white; cursor:pointer;"><i class="fas fa-camera"></i> FOTO<input type="file" accept="image/*" capture="camera" style="display:none"></label>
+            <label class="btn-check" style="background:#4a443f; color:white; cursor:pointer;"><i class="fas fa-microphone"></i> AUDIO<input type="file" accept="audio/*" capture style="display:none"></label>
+        </div>
+        <textarea id="note-finali" rows="4" placeholder="Annotazioni..."></textarea>
+    </div>
+
+    <button class="btn-save" onclick="saveAll()">SALVA VISITA</button>
 </div>
 
-<!-- TASTO SALVA DISCRETO -->
-<span class="save-label">SALVA</span>
-<button class="btn-save" onclick="saveAll()">
-    <i class="fas fa-save"></i>
-</button>
+<!-- FOOTER CON LINK CORRETTO -->
+<div class="footer-minimal">
+    <a href="https://linktr.ee/minimal_studio?utm_source=linktree_profile_share&ltsid=4b83d359-87dc-48ec-b8ae-f3c340495cd0" target="_blank">MINIMAL STUDIO</a>
+</div>
 
-<!-- OVERLAY STORICO DETTAGLIATO -->
+<!-- OVERLAY STORICO -->
 <div id="stats-overlay">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 style="margin:0;">STORICO COMPLETO</h2>
-        <i class="fas fa-times" onclick="document.getElementById('stats-overlay').style.display='none'" style="font-size:24px;"></i>
+    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <h2 style="margin:0;">STORICO BeeTag</h2>
+        <button onclick="document.getElementById('stats-overlay').style.display='none'" style="padding:10px; cursor:pointer;">CHIUDI</button>
+    </div>
+    <div style="display:flex; gap:10px; margin-bottom:20px;">
+        <button class="export-btn" onclick="exportCSV()">CSV STORICO</button>
+        <button class="export-btn" style="background:var(--danger);" onclick="clearHistory()">CANCELLA TUTTO</button>
     </div>
     <div id="stats-list"></div>
 </div>
 
 <script>
+    // Identificatore dell'arnia dall'URL (es. pagina.html?a=5)
     const arniaId = new URLSearchParams(window.location.search).get('a') || "1";
 
     function selectOne(el) {
         el.parentElement.querySelectorAll('.btn-check').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
     }
+    
+    function selectExclude(el, targetId) { 
+        el.classList.toggle('active'); 
+        if(el.classList.contains('active')) document.getElementById(targetId).classList.remove('active'); 
+    }
 
     function updateReginaUI(anno) {
         const box = document.getElementById('reg-colore-visual');
-        if(!anno) return;
+        if(!anno) { box.style.background = "#eee"; box.innerText = "COLORE REGINA"; return; }
         const last = anno.toString().slice(-1);
         const map = {"4":"#2ecc71","9":"#2ecc71","0":"#3498db","5":"#3498db","1":"#ffffff","6":"#ffffff","2":"#f1c40f","7":"#f1c40f","3":"#e74c3c","8":"#e74c3c"};
         const nomi = {"4":"VERDE","9":"VERDE","0":"BLU","5":"BLU","1":"BIANCO","6":"BIANCO","2":"GIALLO","7":"GIALLO","3":"ROSSO","8":"ROSSO"};
-        if(map[last]) { box.style.background = map[last]; box.innerText = nomi[last]; box.style.color = (last=="1"||last=="6")?"#000":"#fff"; }
+        if(map[last]) { 
+            box.style.background = map[last]; 
+            box.innerText = nomi[last]; 
+            box.style.color = (last=="1"||last=="6") ? "#000" : "#fff"; 
+        }
+    }
+
+    function calculateBlocco() {
+        const d = new Date(document.getElementById('blocco-inizio').value);
+        if(isNaN(d)) return;
+        const sblocco = new Date(d);
+        sblocco.setDate(sblocco.getDate() + 21);
+        const diff = Math.ceil((sblocco - new Date()) / 86400000);
+        document.getElementById('blocco-alarm').style.display = diff > 0 ? 'block' : 'none';
+        document.getElementById('days-to-go').innerText = diff;
+    }
+
+    function calculateTrattamento() {
+        const tipo = document.getElementById('tratt-tipo');
+        const giorni = tipo.options[tipo.selectedIndex].getAttribute('data-days');
+        const dataInizio = new Date(document.getElementById('tratt-data').value);
+        if(!giorni || giorni == "0" || isNaN(dataInizio)) {
+            document.getElementById('tratt-alarm').style.display = 'none';
+            return;
+        }
+        const fine = new Date(dataInizio);
+        fine.setDate(fine.getDate() + parseInt(giorni));
+        const diff = Math.ceil((fine - new Date()) / 86400000);
+        document.getElementById('tratt-alarm').style.display = diff > 0 ? 'block' : 'none';
+        document.getElementById('tratt-days').innerText = diff;
     }
 
     function saveAll() {
-        const forza = document.querySelector('#forza-selector .active')?.getAttribute('data-val') || "ND";
+        // Recupero la forza correttamente selezionata
+        const forzaSelezionata = document.querySelector('#forza-selector .active');
+        const forzaVal = forzaSelezionata ? forzaSelezionata.getAttribute('data-val') : "NON SPECIFICATA";
+        
+        const ops = Array.from(document.querySelectorAll('.op-btn.active')).map(b => b.getAttribute('data-val')).join(', ');
+        
         const visita = {
             id: arniaId,
             data: new Date().toLocaleDateString('it-IT'),
-            forza: forza,
+            forza: forzaVal,
             celle: document.getElementById('presenza-celle').classList.contains('active') ? "SI (" + document.getElementById('num-celle').value + ")" : "NO",
-            dataCelle: document.getElementById('cell-date').value || "-",
+            operazioni: ops || "Nessuna",
             note: document.getElementById('note-finali').value || "-"
         };
 
-        let db = JSON.parse(localStorage.getItem('beetag_db')) || [];
+        // Salvo nello storico generale
+        let db = JSON.parse(localStorage.getItem('beetag_final_db')) || [];
         db.unshift(visita);
-        localStorage.setItem('beetag_db', JSON.stringify(db.slice(0, 100)));
-        localStorage.setItem('beetag_last_' + arniaId, JSON.stringify(visita));
+        localStorage.setItem('beetag_final_db', JSON.stringify(db.slice(0, 500)));
         
-        alert("Salvato!");
+        // Salvo come "ultima visita" specifica per questa arnia
+        localStorage.setItem('beetag_last_v_' + arniaId, JSON.stringify(visita));
+        
+        alert("Visita Arnia " + arniaId + " salvata correttamente!"); 
         location.reload();
     }
 
     function showStats() {
         document.getElementById('stats-overlay').style.display = 'block';
-        const db = JSON.parse(localStorage.getItem('beetag_db')) || [];
-        document.getElementById('stats-list').innerHTML = db.map(h => `
-            <div class="history-card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+        const db = JSON.parse(localStorage.getItem('beetag_final_db')) || [];
+        const lista = document.getElementById('stats-list');
+        if(db.length === 0) {
+            lista.innerHTML = "<p>Nessun dato salvato.</p>";
+            return;
+        }
+        lista.innerHTML = db.map(h => `
+            <div style="background:#fff; padding:15px; border-radius:15px; margin-bottom:10px; border-left:6px solid #d4a373">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                     <strong>Arnia ${h.id}</strong>
-                    <span style="font-size:12px; opacity:0.6;">${h.data}</span>
+                    <span>${h.data}</span>
                 </div>
-                <div style="font-size:13px; line-height:1.6;">
-                    <b>Forza:</b> ${h.forza}<br>
-                    <b>Celle Reali:</b> ${h.celle} | <b>Ritrovate:</b> ${h.dataCelle}<br>
-                    <div style="margin-top:8px; padding-top:8px; border-top:1px solid #eee; color:#666;">
-                        <i>Note: ${h.note}</i>
-                    </div>
+                <div style="font-size:13px; color:#555;">
+                    Forza: <b>${h.forza}</b><br>
+                    Celle: ${h.celle} | Op: ${h.operazioni}<br>
+                    <i style="color:#888;">Note: ${h.note}</i>
                 </div>
             </div>
         `).join('');
     }
 
+    function clearHistory() { if(confirm("Sei sicura di voler cancellare TUTTO lo storico?")) { localStorage.clear(); location.reload(); } }
+
+    function exportCSV() {
+        const db = JSON.parse(localStorage.getItem('beetag_final_db')) || [];
+        if(db.length === 0) return alert("Nulla da esportare");
+        let csv = "Arnia;Data;Forza;Celle;Operazioni;Note\n";
+        db.forEach(h => { csv += `${h.id};${h.data};${h.forza};${h.celle};${h.operazioni};${h.note}\n`; });
+        const blob = new Blob([csv], {type:'text/csv'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Storico_BeeTag.csv'; a.click();
+    }
+
+    function exportSingle() {
+        const f = document.querySelector('#forza-selector .active')?.innerText || "ND";
+        const txt = `REPORT BEE TAG\nArnia: ${arniaId}\nData: ${new Date().toLocaleDateString()}\nForza: ${f}\nNote: ${document.getElementById('note-finali').value}`;
+        const blob = new Blob([txt], {type:'text/plain'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Report_Arnia_${arniaId}.txt`; a.click();
+    }
+
     window.onload = () => {
-        const last = JSON.parse(localStorage.getItem('beetag_last_' + arniaId));
+        // Carica ultima visita per questa arnia
+        const last = JSON.parse(localStorage.getItem('beetag_last_v_' + arniaId));
         if(last) { 
             document.getElementById('last-data').innerText = last.data; 
             document.getElementById('last-forza').innerText = last.forza; 
         }
+        
+        // Geolocalizzazione e Meteo
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(pos => {
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&localityLanguage=it`)
+                .then(r => r.json()).then(d => document.getElementById('loc-name').innerText = d.city || d.locality || "POSIZIONE RILEVATA");
+                
                 fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
                 .then(r => r.json()).then(m => {
                     document.getElementById('temp-val').innerText = Math.round(m.current_weather.temperature) + "°";
                     document.getElementById('meteo-icon').innerText = m.current_weather.weathercode < 3 ? '☀️' : '☁️';
-                    document.getElementById('loc-name').innerText = "POSIZIONE OK";
                 });
-            });
+            }, () => { document.getElementById('loc-name').innerText = "GPS DISATTIVATO"; });
         }
     };
 </script>
