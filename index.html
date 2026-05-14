@@ -13,34 +13,23 @@
     <style>
         :root { --bg: #bcaf9f; --card: #fdfcfb; --text: #4a443f; --accent: #d4a373; --danger: #9e2a2b; --ok: #6b705c; --header: #2c2a28; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); padding-bottom: 120px; }
-        
         header { background: var(--header); color: #fff; padding: 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .logo-area { display:flex; align-items:center; gap:12px; font-weight: 900; font-size: 20px; letter-spacing: 2px; text-transform: uppercase; }
-
         .dashboard-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin: 15px; }
         .meteo-panel { background: #eaddcf; border-radius: 20px; padding: 15px; text-align: center; border: 1px solid rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; min-height: 110px; }
         .summary-panel { background: var(--card); border-radius: 20px; padding: 15px; font-size: 11px; }
-
         .container { padding: 0 15px; }
         .section { background: var(--card); border-radius: 25px; padding: 22px; margin-bottom: 25px; border-top: 6px solid var(--accent); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
-        
         h2 { font-size: 14px; text-transform: uppercase; color: #5d5753; border-bottom: 2px solid #f0edea; padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; margin-top: 0; }
-
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px; }
         .btn-check { min-height: 60px; background: #fff; border: 2px solid #e8e2dc; border-radius: 16px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; color: var(--text); transition: 0.2s; }
         .btn-check.active { background: var(--accent) !important; color: #fff !important; border-color: var(--accent); }
         .btn-check.danger.active { background: var(--danger) !important; border-color: var(--danger); }
-        .btn-media { background: #4a443f !important; color: white !important; }
-
         input, select, textarea { width: 100%; padding: 18px; border: 2px solid #e8e2dc; border-radius: 16px; font-size: 16px; box-sizing: border-box; margin-bottom: 15px; font-weight: 600; font-family: inherit; color: var(--text); }
-        
         #reg-colore-visual { height: 60px; border-radius: 16px; margin-bottom: 15px; border: 3px solid #e8e2dc; display: flex; align-items: center; justify-content: center; font-weight: 900; background: #eee; text-transform: uppercase; }
-
         .btn-save-fixed { position: fixed; bottom: 30px; right: 20px; background: var(--ok); color: white; width: 65px; height: 65px; border: none; border-radius: 50%; font-size: 28px; z-index: 1001; box-shadow: 0 8px 20px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
         .footer-minimal { padding: 30px 20px; text-align: center; }
         .footer-minimal a { color: var(--header); text-decoration: none; font-weight: 900; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--header); }
-
         #stats-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdfcfb; z-index: 2000; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         .history-card { background:#fff; padding:18px; border-radius:18px; margin-bottom:12px; border-left:6px solid var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .info-label { font-size: 11px; font-weight: 800; color: #8a817c; margin-bottom: 8px; display: block; text-transform: uppercase; }
@@ -70,7 +59,6 @@
 </div>
 
 <div class="container">
-    <!-- 1. STATO FAMIGLIA -->
     <div class="section">
         <h2><i class="fas fa-users"></i> Stato Famiglia</h2>
         <div class="grid" id="forza-selector">
@@ -78,14 +66,8 @@
             <div class="btn-check" data-val="MEDIA" onclick="selectOne(this)">MEDIA</div>
             <div class="btn-check" data-val="SCARSA" onclick="selectOne(this)">SCARSA</div>
         </div>
-        <div class="grid">
-            <div class="btn-check multi" data-val="COV. OPERCOLATA" onclick="this.classList.toggle('active')">COV. OPERCOLATA</div>
-            <div class="btn-check multi" data-val="COV. FRESCA" onclick="this.classList.toggle('active')">COV. FRESCA</div>
-            <div class="btn-check multi" data-val="SCORTE" onclick="this.classList.toggle('active')">SCORTE</div>
-        </div>
     </div>
 
-    <!-- 2. REGINA -->
     <div class="section">
         <h2><i class="fas fa-crown"></i> Regina</h2>
         <span class="info-label">Anno di Nascita</span>
@@ -99,56 +81,44 @@
         </div>
     </div>
 
-    <!-- 3. SCIAMATURA -->
     <div class="section">
         <h2><i class="fas fa-biohazard"></i> Sciamatura</h2>
         <span class="info-label">Data Ritrovamento Celle</span>
         <input type="date" id="cell-date-found">
         <div class="grid" style="grid-template-columns: 2fr 1fr;">
-            <div class="btn-check danger multi" id="presenza-celle" onclick="this.classList.toggle('active')">CELLE REALI</div>
+            <div class="btn-check danger" id="presenza-celle" onclick="this.classList.toggle('active')">CELLE REALI</div>
             <input type="number" id="num-celle" placeholder="N.">
         </div>
     </div>
 
-    <!-- 4. OPERAZIONI (CON BLOCCO COVATA) -->
     <div class="section">
         <h2><i class="fas fa-tools"></i> Operazioni</h2>
         <div class="grid">
             <div class="btn-check op-btn" data-val="BLOCCO COVATA" onclick="this.classList.toggle('active')">BLOCCO COVATA</div>
             <div class="btn-check op-btn" data-val="FORM. NUCLEO" onclick="this.classList.toggle('active')">FORM. NUCLEO</div>
             <div class="btn-check op-btn" data-val="PAREGGIATURA" onclick="this.classList.toggle('active')">PAREGGIATURA</div>
-            <div class="btn-check op-btn" data-val="MESSO MELARIO" onclick="this.classList.toggle('active')">MESSO MELARIO</div>
-            <div class="btn-check op-btn" data-val="NUTRIZIONE" onclick="this.classList.toggle('active')">NUTRIZIONE</div>
         </div>
     </div>
 
-    <!-- 5. TRATTAMENTI VARROA (POSIZIONE AGGIORNATA) -->
     <div class="section">
         <h2><i class="fas fa-medkit"></i> Trattamenti Varroa</h2>
         <select id="tipo-trattamento" onchange="updateTrattamentoUI()">
             <option value="">SELEZIONA TRATTAMENTO</option>
-            <option value="APIVAR">APIVAR (6-10 sett.)</option>
-            <option value="APIBIOXAL">APIBIOXAL (Gocciolato/Subl.)</option>
-            <option value="APILIFE VAR">APILIFE VAR (28 gg)</option>
-            <option value="APIGUARD">APIGUARD (28 gg)</option>
+            <option value="APIVAR">APIVAR</option>
+            <option value="APIBIOXAL">APIBIOXAL</option>
+            <option value="APILIFE VAR">APILIFE VAR</option>
         </select>
-        <span class="info-label">Data Inizio</span>
         <input type="date" id="data-trattamento" onchange="updateTrattamentoUI()">
         <div id="trattamento-result" class="treatment-info"></div>
     </div>
 
-    <!-- 6. MEDIA E NOTE -->
     <div class="section">
-        <h2><i class="fas fa-microphone-alt"></i> Media & Note</h2>
-        <div class="grid" style="grid-template-columns: 1fr 1fr;">
-            <label class="btn-check btn-media"><i class="fas fa-camera"></i> FOTO<input type="file" accept="image/*" capture="camera" style="display:none"></label>
-            <label class="btn-check btn-media"><i class="fas fa-microphone"></i> AUDIO<input type="file" accept="audio/*" capture style="display:none"></label>
-        </div>
+        <h2><i class="fas fa-edit"></i> Note</h2>
         <textarea id="note-finali" rows="4" placeholder="Annotazioni..."></textarea>
     </div>
 
     <div class="footer-minimal">
-        <a href="https://linktr.ee/minimal_studio" target="_blank">MINIMAL STUDIO</a>
+        <a href="#">MINIMAL STUDIO</a>
     </div>
 </div>
 
@@ -156,10 +126,10 @@
 
 <div id="stats-overlay">
     <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-        <h2 style="margin:0;">STORICO BeeTag</h2>
+        <h2>STORICO</h2>
         <i class="fas fa-times" onclick="document.getElementById('stats-overlay').style.display='none'" style="font-size:24px; cursor:pointer;"></i>
     </div>
-    <button class="btn-clear-history" onclick="clearAllData()"><i class="fas fa-trash-alt"></i> SVUOTA TUTTO</button>
+    <button class="btn-clear-history" onclick="clearAllData()">SVUOTA TUTTO</button>
     <div id="stats-list"></div>
 </div>
 
@@ -182,19 +152,17 @@
         const res = document.getElementById('trattamento-result');
         if(!tipo || !dataInizio) { res.style.display = 'none'; return; }
         let fine = new Date(dataInizio);
-        let msg = (tipo === "APIVAR") ? "Fine minima (6 sett): " : "Fine trattamento: ";
-        fine.setDate(fine.getDate() + (tipo === "APIVAR" ? 42 : 28));
+        fine.setDate(fine.getDate() + 28);
         res.style.display = 'block';
-        res.innerHTML = `<i class="fas fa-calendar-check"></i> ${msg} ${fine.toLocaleDateString('it-IT')}`;
+        res.innerHTML = `Fine prevista: ${fine.toLocaleDateString('it-IT')}`;
     }
 
     function updateReginaUI(anno) {
         const box = document.getElementById('reg-colore-visual');
-        if(!anno) { box.style.background = "#eee"; box.innerText = "COLORE REGINA"; return; }
+        if(!anno) { box.style.background = "#eee"; return; }
         const last = anno.toString().slice(-1);
         const map = {"4":"#2ecc71","9":"#2ecc71","0":"#3498db","5":"#3498db","1":"#ffffff","6":"#ffffff","2":"#f1c40f","7":"#f1c40f","3":"#e74c3c","8":"#e74c3c"};
-        const nomi = {"4":"VERDE","9":"VERDE","0":"BLU","5":"BLU","1":"BIANCO","6":"BIANCO","2":"GIALLO","7":"GIALLO","3":"ROSSO","8":"ROSSO"};
-        if(map[last]) { box.style.background = map[last]; box.innerText = nomi[last]; box.style.color = (last=="1"||last=="6") ? "#000" : "#fff"; }
+        if(map[last]) box.style.background = map[last];
     }
 
     function saveAll() {
@@ -208,47 +176,51 @@
             forza: forza,
             regina: qStats || "ND",
             trattamento: document.getElementById('tipo-trattamento').value || "Nessuno",
-            celle: document.getElementById('presenza-celle').classList.contains('active') ? "SI (" + document.getElementById('num-celle').value + ")" : "NO",
             operazioni: ops || "Nessuna",
             note: document.getElementById('note-finali').value || "-"
         };
 
-        let db = JSON.parse(localStorage.getItem('beetag_final_db')) || [];
+        let db = JSON.parse(localStorage.getItem('beetag_db')) || [];
         db.unshift(visita);
-        localStorage.setItem('beetag_final_db', JSON.stringify(db.slice(0, 500)));
-        localStorage.setItem('beetag_last_v_' + arniaId, JSON.stringify(visita));
-        alert("Salvataggio completato per Arnia " + arniaId); location.reload();
+        localStorage.setItem('beetag_db', JSON.stringify(db));
+        localStorage.setItem('beetag_last_' + arniaId, JSON.stringify(visita));
+        alert("Salvato!"); location.reload();
     }
 
     function showStats() {
         document.getElementById('stats-overlay').style.display = 'block';
-        const db = JSON.parse(localStorage.getItem('beetag_final_db')) || [];
+        const db = JSON.parse(localStorage.getItem('beetag_db')) || [];
         document.getElementById('stats-list').innerHTML = db.map(h => `
             <div class="history-card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                    <strong>Arnia ${h.id}</strong> <span>${h.data}</span>
-                </div>
-                <div style="font-size:13px;">
-                    <b>Forza:</b> ${h.forza} | <b>Reg:</b> ${h.regina}<br>
-                    <b>Tratt.:</b> ${h.trattamento} | <b>Celle:</b> ${h.celle}<br>
-                    <b>Op:</b> ${h.operazioni}<br>
-                    <i style="color:#666;">Note: ${h.note}</i>
-                </div>
+                <strong>Arnia ${h.id}</strong> - ${h.data}<br>
+                Forza: ${h.forza} | Reg: ${h.regina}<br>
+                Op: ${h.operazioni} | Tratt: ${h.trattamento}
             </div>
         `).join('');
     }
 
     function clearAllData() {
-        if(confirm("Attenzione: questo cancellerà TUTTI i dati storici. Procedere?")) {
-            localStorage.removeItem('beetag_final_db');
-            localStorage.removeItem('beetag_last_v_' + arniaId);
-            location.reload();
-        }
+        if(confirm("Cancello tutto?")) { localStorage.clear(); location.reload(); }
     }
 
     window.onload = () => {
-        const last = JSON.parse(localStorage.getItem('beetag_last_v_' + arniaId));
-        if(last) { document.getElementById('last-data').innerText = last.data; document.getElementById('last-forza').innerText = last.forza; }
+        const last = JSON.parse(localStorage.getItem('beetag_last_' + arniaId));
+        if(last) { 
+            document.getElementById('last-data').innerText = last.data; 
+            document.getElementById('last-forza').innerText = last.forza; 
+        }
+
+        if (navigator.geolocation) {
+            document.getElementById('loc-name').innerText = "ATTESA GPS...";
+            navigator.geolocation.getCurrentPosition(pos => {
+                fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
+                .then(r => r.json()).then(m => {
+                    document.getElementById('temp-val').innerText = Math.round(m.current_weather.temperature) + "°";
+                    document.getElementById('meteo-icon').innerText = m.current_weather.weathercode < 3 ? '☀️' : '☁️';
+                    document.getElementById('loc-name').innerText = "METEO ATTIVO";
+                });
+            }, () => { document.getElementById('loc-name').innerText = "GPS BLOCCATO"; });
+        }
     };
 </script>
 </body>
