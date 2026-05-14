@@ -24,7 +24,7 @@
         .alarm-badge { background: var(--danger); color: white; padding: 15px; border-radius: 15px; font-weight: 900; display: none; text-align: center; margin-bottom: 15px; font-size: 12px; }
         .btn-save { position: fixed; bottom: 20px; left: 20%; right: 20%; background: var(--ok); color: white; padding: 18px; border: none; border-radius: 25px; font-size: 16px; font-weight: 900; z-index: 1000; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-transform: uppercase; }
         #stats-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fdfcfb; z-index: 2000; padding: 25px; box-sizing: border-box; overflow-y: auto; }
-        .btn-close { background: var(--header); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 800; }
+        .btn-close { background: var(--header); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 800; width: 100%; margin-bottom: 10px; }
         .btn-clear { background: var(--danger); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-weight: 800; margin-top: 20px; text-transform: uppercase; }
     </style>
 </head>
@@ -32,7 +32,7 @@
 
 <header>
     <div class="logo">BEETAG</div>
-    <div onclick="showStats()" style="background:rgba(255,255,255,0.15); padding:8px 15px; border-radius:12px; font-size:11px; cursor:pointer; font-weight:900;">STORICO</div>
+    <div onclick="showStats()" style="background:rgba(255,255,255,0.15); padding:8px 15px; border-radius:12px; font-size:11px; cursor:pointer; font-weight:900; z-index: 1001;">STORICO</div>
 </header>
 
 <div class="dashboard-top">
@@ -90,6 +90,14 @@
         <input type="date" id="data-celle" onchange="checkCelleScadenza()">
     </div>
 
+    <!-- BLOCCO COVATA -->
+    <div class="section">
+        <h2><i class="fas fa-lock"></i> Blocco Covata</h2>
+        <div id="blocco-alarm" class="alarm-badge">⚠️ SBLOCCO TRA: <span id="days-to-go">--</span> GG</div>
+        <label style="font-size: 10px; font-weight: 800; color: var(--accent); display: block; margin-bottom: 5px;">DATA INIZIO BLOCCO:</label>
+        <input type="date" id="blocco-inizio" onchange="calculateBlocco()">
+    </div>
+
     <!-- OPERAZIONI -->
     <div class="section">
         <h2><i class="fas fa-tools"></i> Operazioni</h2>
@@ -136,7 +144,7 @@
 
 <div id="stats-overlay">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2>STORICO</h2>
+        <h2>STORICO BeeTag</h2>
         <button class="btn-close" onclick="document.getElementById('stats-overlay').style.display='none'">CHIUDI</button>
     </div>
     <div id="stats-list"></div>
@@ -166,6 +174,16 @@
         if(isNaN(d)) return;
         const diff = Math.floor((new Date() - d) / 86400000);
         document.getElementById('cella-alarm').style.display = diff >= 3 ? 'block' : 'none';
+    }
+
+    function calculateBlocco() {
+        const d = new Date(document.getElementById('blocco-inizio').value);
+        if(isNaN(d)) return;
+        const sblocco = new Date(d);
+        sblocco.setDate(sblocco.getDate() + 21);
+        const diff = Math.ceil((sblocco - new Date()) / 86400000);
+        document.getElementById('blocco-alarm').style.display = diff > 0 ? 'block' : 'none';
+        document.getElementById('days-to-go').innerText = diff;
     }
 
     function updateReginaUI(anno) {
